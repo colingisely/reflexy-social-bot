@@ -8,12 +8,12 @@ import { uploadImage } from './lib/upload.js';
 import { publishImage, publishStory } from './lib/ig.js';
 
 const TEMPLATE_MAP = {
-  T1: 't1-ui-hero',
-  T2: 't2-stat',
-  T3: 't3-manifesto',
-  T4: 't4-antes-depois',
-  T5: 't5-carousel-cover',
-  T6: 't6-editorial',
+  'T1 UI Hero': 't1-ui-hero',
+  'T2 Stat': 't2-stat',
+  'T3 Manifesto': 't3-manifesto',
+  'T4 Antes/Depois': 't4-antes-depois',
+  'T5 Carousel': 't5-carousel-cover',
+  'T6 Editorial': 't6-editorial',
 };
 
 export async function publishPost(code, { dryRun = false, alsoStory = true } = {}) {
