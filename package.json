@@ -1,0 +1,24 @@
+{
+  "name": "reflexy-social-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Bot autonomo de publicacao Instagram da Reflexy. Notion → Render Puppeteer → IG Graph API.",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "render": "node scripts/render.js",
+    "caption": "node scripts/caption.js",
+    "publish": "node scripts/publish.js",
+    "story": "node scripts/story.js",
+    "metrics": "node scripts/metrics.js",
+    "refresh-token": "node scripts/refresh-token.js",
+    "tick": "node scripts/tick.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.0",
+    "@notionhq/client": "^2.3.0",
+    "puppeteer": "^23.0.0"
+  }
+}

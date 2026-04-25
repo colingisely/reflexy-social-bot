@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Reflexy · T6 Editorial Lookbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  /* T6 · Editorial Lookbook
+     Uso: hero post mensal, demonstracao silenciosa
+     Imagem AI try-on tela cheia, caption minima */
+  .t6 .image-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--onyx);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  /* Placeholder visual: substituir por <img> com try-on real */
+  .t6 .placeholder-img {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(112,80,160,.4) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 70%, rgba(43,18,80,.6) 0%, transparent 60%),
+      linear-gradient(180deg, var(--onyx-mid) 0%, var(--abyss) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(184,174,221,.4);
+    font-family: var(--f-data);
+    font-size: 14px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.8;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .t6 .placeholder-img::before {
+    content: '';
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,174,221,.2);
+    display: block;
+  }
+  .t6 .vignette {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, transparent 50%, rgba(6,5,15,.85) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .t6 .caption {
+    position: absolute;
+    bottom: 110px;
+    left: 64px;
+    z-index: 3;
+    font-family: var(--f-data);
+    font-size: 14px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    line-height: 1.7;
+  }
+  .t6 .caption .editorial-tag {
+    color: var(--verdigris);
+    margin-right: 14px;
+  }
+  .t6 .caption .pipe {
+    color: var(--rule-strong);
+    margin: 0 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="frame t6">
+
+  <div class="image-wrap">
+    <div class="placeholder-img">
+      [ TRY-ON EDITORIAL<br/>FASHN.ai ]
+    </div>
+  </div>
+
+  <div class="vignette"></div>
+
+  <div class="caption">
+    <span class="editorial-tag">EDITORIAL</span>
+    Camisa oversized<span class="pipe">·</span>Linho cru
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-mark">
+    <svg class="gem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1e" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C4B8E4" stop-opacity=".7"/><stop offset="100%" stop-color="#7050A0" stop-opacity=".5"/></linearGradient>
+        <linearGradient id="g2e" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0CC89E" stop-opacity=".4"/><stop offset="100%" stop-color="#0CC89E" stop-opacity=".05"/></linearGradient>
+        <linearGradient id="g3e" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#E8E2F8" stop-opacity=".9"/><stop offset="100%" stop-color="#B090D8" stop-opacity=".7"/></linearGradient>
+      </defs>
+      <polygon points="50,22 28,50 3,50 50,3" fill="url(#g1e)"/>
+      <polygon points="50,22 72,50 97,50 50,3" fill="url(#g1e)"/>
+      <polygon points="50,78 28,50 3,50 50,97" fill="url(#g2e)"/>
+      <polygon points="50,78 72,50 97,50 50,97" fill="url(#g2e)"/>
+      <polygon points="50,22 72,50 50,78 28,50" fill="url(#g3e)"/>
+    </svg>
+    <span class="text">REFLEXY</span>
+  </div>
+  <div class="footer-handle">reflexy.co</div>
+
+</div>
+
+</body>
+</html>

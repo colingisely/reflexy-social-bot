@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Reflexy · T5 Carousel · Capa</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  /* T5 · Carousel Tatico — Slide 1 (capa)
+     Uso: educacional para lojistas, save+share
+     Capa com promessa clara + numero de slides */
+  .t5 .content {
+    padding: 80px 64px 0;
+    height: 100%;
+    justify-content: space-between;
+  }
+  .t5 .top {
+    display: flex;
+    flex-direction: column;
+  }
+  .t5 .eyebrow-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .t5 .pagination {
+    font-family: var(--f-data);
+    font-size: 14px;
+    letter-spacing: .25em;
+    color: var(--dusk);
+    padding: 8px 14px;
+    border: 1px solid var(--rule);
+    border-radius: 100px;
+    background: rgba(15,13,30,.5);
+  }
+  .t5 .promise {
+    font-family: var(--f-mark);
+    font-weight: 500;
+    font-size: 96px;
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    color: var(--mist);
+    margin-top: 80px;
+    max-width: 920px;
+  }
+  .t5 .promise .accent {
+    color: var(--verdigris);
+    font-style: italic;
+    font-weight: 700;
+  }
+  .t5 .sub {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.5;
+    color: var(--dusk);
+    margin-top: 32px;
+    max-width: 720px;
+  }
+  .t5 .swipe-hint {
+    margin-bottom: 220px;
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 26px;
+    border-radius: 100px;
+    background: linear-gradient(135deg, #2B1250, #7050A0);
+    color: var(--mist);
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: .04em;
+    box-shadow: 0 0 32px rgba(43,18,80,.55);
+  }
+  .t5 .swipe-hint .arrow {
+    font-family: var(--f-data);
+    font-size: 22px;
+  }
+  .t5 .badge-corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle at top right, rgba(12,200,158,.18), transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="frame t5 grain">
+
+  <div class="badge-corner"></div>
+
+  <div class="content">
+    <div class="top">
+      <div class="eyebrow-row">
+        <div class="eyebrow">GUIA · LOJA SHOPIFY</div>
+        <div class="pagination">01 / 07</div>
+      </div>
+      <h1 class="promise">5 motivos pelos quais sua loja perde venda <span class="accent">no provador</span>.</h1>
+      <p class="sub">E como resolver um por um — em até 5 minutos cada.</p>
+    </div>
+
+    <div class="swipe-hint">
+      Arrasta <span class="arrow">→</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-mark">
+    <svg class="gem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1d" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C4B8E4" stop-opacity=".7"/><stop offset="100%" stop-color="#7050A0" stop-opacity=".5"/></linearGradient>
+        <linearGradient id="g2d" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0CC89E" stop-opacity=".4"/><stop offset="100%" stop-color="#0CC89E" stop-opacity=".05"/></linearGradient>
+        <linearGradient id="g3d" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#E8E2F8" stop-opacity=".9"/><stop offset="100%" stop-color="#B090D8" stop-opacity=".7"/></linearGradient>
+      </defs>
+      <polygon points="50,22 28,50 3,50 50,3" fill="url(#g1d)"/>
+      <polygon points="50,22 72,50 97,50 50,3" fill="url(#g1d)"/>
+      <polygon points="50,78 28,50 3,50 50,97" fill="url(#g2d)"/>
+      <polygon points="50,78 72,50 97,50 50,97" fill="url(#g2d)"/>
+      <polygon points="50,22 72,50 50,78 28,50" fill="url(#g3d)"/>
+    </svg>
+    <span class="text">REFLEXY</span>
+  </div>
+  <div class="footer-handle">reflexy.co</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Reflexy · T4 Antes/Depois</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+  /* T4 · Antes/Depois Try-On
+     Uso: prova de produto, formato com maior viralidade no nicho
+     Split vertical 50/50 com produto -> pessoa vestindo */
+  .t4 .header-band {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 56px 64px 28px;
+    z-index: 5;
+    text-align: center;
+  }
+  .t4 .header-band .eyebrow {
+    margin-bottom: 14px;
+  }
+  .t4 .header-band .ttl {
+    font-family: var(--f-mark);
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 1.05;
+    color: var(--mist);
+    letter-spacing: -.01em;
+  }
+  .t4 .split {
+    position: absolute;
+    top: 240px;
+    left: 0;
+    right: 0;
+    bottom: 140px;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+  }
+  .t4 .pane {
+    background: var(--onyx);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .t4 .pane.left {
+    border-radius: 16px 0 0 16px;
+    margin-left: 64px;
+  }
+  .t4 .pane.right {
+    border-radius: 0 16px 16px 0;
+    margin-right: 64px;
+  }
+  .t4 .divider {
+    background: var(--rule-strong);
+    margin: 32px 0;
+  }
+  .t4 .pane-label {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    font-family: var(--f-data);
+    font-size: 14px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--rule);
+    background: rgba(6,5,15,.7);
+    backdrop-filter: blur(6px);
+  }
+  .t4 .pane-label.before { color: var(--dusk); }
+  .t4 .pane-label.after {
+    color: var(--verdigris);
+    border-color: rgba(12,200,158,.35);
+    background: rgba(12,200,158,.10);
+  }
+  /* Placeholder visual: substituir por imagem real */
+  .t4 .placeholder {
+    width: 70%;
+    height: 70%;
+    border-radius: 12px;
+    border: 1.5px dashed var(--rule-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dusk);
+    font-family: var(--f-data);
+    font-size: 13px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .t4 .placeholder.before {
+    background: linear-gradient(135deg, rgba(184,174,221,.04), rgba(184,174,221,.01));
+  }
+  .t4 .placeholder.after {
+    background: linear-gradient(135deg, rgba(112,80,160,.18), rgba(43,18,80,.25));
+    border-color: rgba(12,200,158,.25);
+  }
+  .t4 .footer-credit {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--f-data);
+    font-size: 14px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--dusk);
+  }
+  .t4 .footer-credit .accent { color: var(--verdigris); }
+</style>
+</head>
+<body>
+
+<div class="frame t4 grain">
+
+  <!-- Header -->
+  <div class="header-band">
+    <div class="eyebrow">ANTES & DEPOIS · TRY-ON</div>
+    <h2 class="ttl">A mesma peça. Outra venda.</h2>
+  </div>
+
+  <!-- Split -->
+  <div class="split">
+    <div class="pane left">
+      <span class="pane-label before">ANTES</span>
+      <div class="placeholder before">[ FOTO PRODUTO<br/>SHOPIFY ]</div>
+    </div>
+    <div class="divider"></div>
+    <div class="pane right">
+      <span class="pane-label after">COM REFLEXY</span>
+      <div class="placeholder after">[ TRY-ON GERADO<br/>PELA IA ]</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-credit">LOJA · <span class="accent">@nomedaloja</span></div>
+
+  <div class="footer-mark">
+    <svg class="gem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1c" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C4B8E4" stop-opacity=".7"/><stop offset="100%" stop-color="#7050A0" stop-opacity=".5"/></linearGradient>
+        <linearGradient id="g2c" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0CC89E" stop-opacity=".4"/><stop offset="100%" stop-color="#0CC89E" stop-opacity=".05"/></linearGradient>
+        <linearGradient id="g3c" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#E8E2F8" stop-opacity=".9"/><stop offset="100%" stop-color="#B090D8" stop-opacity=".7"/></linearGradient>
+      </defs>
+      <polygon points="50,22 28,50 3,50 50,3" fill="url(#g1c)"/>
+      <polygon points="50,22 72,50 97,50 50,3" fill="url(#g1c)"/>
+      <polygon points="50,78 28,50 3,50 50,97" fill="url(#g2c)"/>
+      <polygon points="50,78 72,50 97,50 50,97" fill="url(#g2c)"/>
+      <polygon points="50,22 72,50 50,78 28,50" fill="url(#g3c)"/>
+    </svg>
+    <span class="text">REFLEXY</span>
+  </div>
+  <div class="footer-handle">reflexy.co</div>
+
+</div>
+
+</body>
+</html>

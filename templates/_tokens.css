@@ -1,0 +1,181 @@
+/* ════════════════════════════════════════════════════════════════
+   Reflexy · Social Templates · Tokens compartilhados (Brand v7)
+   Importar em qualquer template do feed/reel.
+   Aspect ratio padrao do feed: 4:5 (1080x1350)
+════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Surfaces */
+  --abyss:        #06050F;
+  --onyx:         #0F0D1E;
+  --onyx-mid:     #161330;
+
+  /* Brand */
+  --plum:         #2B1250;
+  --mauve:        #7050A0;
+  --lavender:     #B8AEDD;
+
+  /* Texto */
+  --mist:         #EDEBF5;
+  --dusk:         #A09CC0;
+
+  /* Semantic — usar com escassez */
+  --verdigris:    #0CC89E;
+  --cobalt:       #3B82F6;
+  --warning:      #FFB432;
+  --error:        #FF5A5A;
+
+  /* Borders */
+  --rule:         rgba(184,174,221,0.14);
+  --rule-soft:    rgba(184,174,221,0.08);
+  --rule-strong:  rgba(184,174,221,0.26);
+
+  /* Gradients */
+  --grad-text:    linear-gradient(160deg, #EDEBF5 0%, rgba(237,235,245,.75) 60%, #B8AEDD 100%);
+  --grad-cta:     linear-gradient(135deg, #2B1250 0%, #7050A0 100%);
+  --grad-plum-fade: linear-gradient(135deg, #2B1250 0%, #06050F 100%);
+
+  /* Tipografia */
+  --f-mark:  'Bricolage Grotesque', sans-serif;
+  --f-body:  'DM Sans', sans-serif;
+  --f-data:  'IBM Plex Mono', monospace;
+  --f-serif: 'Instrument Serif', serif;
+
+  /* Radii */
+  --r-card:  16px;
+  --r-pill:  100px;
+  --r-input: 12px;
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; }
+
+body {
+  background: var(--abyss);
+  color: var(--mist);
+  font-family: var(--f-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+/* Frame oficial do feed: 1080x1350 (4:5) */
+.frame {
+  width: 1080px;
+  height: 1350px;
+  position: relative;
+  overflow: hidden;
+  background: var(--abyss);
+}
+
+/* Frame de reel/story: 1080x1920 (9:16) */
+.frame-reel {
+  width: 1080px;
+  height: 1920px;
+  position: relative;
+  overflow: hidden;
+  background: var(--abyss);
+}
+
+/* Grain noise (opcional, herdado do brand v7) */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Componentes recorrentes
+════════════════════════════════════════════════════════════════ */
+
+/* Eyebrow padrao Reflexy — usar em todos os posts */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--f-data);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .30em;
+  text-transform: uppercase;
+  color: var(--dusk);
+}
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--verdigris);
+  opacity: .7;
+}
+.eyebrow.with-dot::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--verdigris);
+  box-shadow: 0 0 8px var(--verdigris);
+}
+
+/* Logo wordmark "REFLEXY" reusable */
+.wordmark {
+  font-family: var(--f-mark);
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--mist);
+  text-transform: uppercase;
+}
+
+/* Footer logo cluster (gem + wordmark) — usar canto inferior dos posts */
+.footer-mark {
+  position: absolute;
+  bottom: 48px;
+  left: 64px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 5;
+}
+.footer-mark .gem {
+  width: 28px;
+  height: 28px;
+}
+.footer-mark .text {
+  font-family: var(--f-mark);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: .14em;
+  color: var(--mist);
+}
+
+/* CTA discreto canto inferior direito */
+.footer-handle {
+  position: absolute;
+  bottom: 48px;
+  right: 64px;
+  font-family: var(--f-data);
+  font-size: 14px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--dusk);
+  z-index: 5;
+}
+
+/* Container central padrao do post */
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 80px 64px 140px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Logo gem inline (SVG) — usar via <use> ou inline
+════════════════════════════════════════════════════════════════ */

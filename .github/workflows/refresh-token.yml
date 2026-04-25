@@ -1,0 +1,35 @@
+name: refresh-token-monthly
+
+on:
+  schedule:
+    - cron: "0 3 1 * *"   # dia 1 do mes, 00h horario BR
+  workflow_dispatch: {}
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Refresh long-lived token
+        id: refresh
+        env:
+          META_APP_ID: ${{ secrets.META_APP_ID }}
+          META_APP_SECRET: ${{ secrets.META_APP_SECRET }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: node scripts/refresh-token.js
+
+      - name: Update IG_ACCESS_TOKEN secret
+        env:
+          GH_TOKEN: ${{ secrets.PAT_FOR_SECRETS }}  # PAT com permissao de escrever Secrets
+        run: |
+          gh secret set IG_ACCESS_TOKEN -b "${{ steps.refresh.outputs.token }}" -R ${{ github.repository }}
+          echo "Token renovado, expira em ${{ steps.refresh.outputs.expires_at }}"
