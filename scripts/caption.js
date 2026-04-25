@@ -8,7 +8,7 @@ export async function captionForPost(post) {
   const refined = await refineCaption({
     hook: post.hook,
     body: post.body,
-    dadoFonte: post.dadoFonte,
+    dadoFonte: post.dado,
     template: post.template,
     pilar: post.pilar,
   });

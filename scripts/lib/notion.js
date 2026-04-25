@@ -1,34 +1,32 @@
 // Notion helpers — Posts Instagram database
-// Schema esperado (props):
-//   #         (rich_text) ex P01..P12
-//   Post      (title)
+// Schema REAL conforme DB Notion (validado 2026-04-25):
+//   #          (rich_text)  ex P01..P12
+//   Post       (title)      hook curto
 //   Data prevista (date)
-//   Template  (select) T1..T6, R1..R3
-//   Pilar     (select) Produto, Educacional, Manifesto, Prova
-//   Status    (status) Backlog, Em producao, Aprovado, Agendado, Publicado, Metricas coletadas
-//   Responsavel (select)
-//   Hook      (rich_text)
-//   Body      (rich_text)
-//   Hashtags  (multi_select)
-//   Dado/fonte (rich_text) ex D1..D6
-//   Asset URL  (url)
-//   Scheduled at (date)
-//   Published at (date)
-//   IG post ID (rich_text)
+//   Template   (select)     T1 UI Hero | T2 Stat | T3 Manifesto | T4 Antes/Depois | T5 Carousel | T6 Editorial | R1..R3
+//   Pilar      (select)     Produto | Educacional | Manifesto | Prova
+//   Status     (select)     Backlog | Em producao | Aprovado | Agendado | Publicado | Metricas coletadas
+//   Responsavel (select)    Gi | Claude Code | Claude Design | Claude in Chrome | Gi + Claude | Bot (auto)
+//   Hook       (rich_text)
+//   Body       (rich_text)
+//   Hashtags   (multi_select) 13 opcoes pre-definidas
+//   Dado       (select)     D1..D6 | sem dado
+//   Asset      (url)
+//   Scheduled  (date+time)
+//   Published  (date+time)  preenchido pelo bot
+//   IG Post    (rich_text)  preenchido pelo bot
 //   Reach / Likes / Saves / Comments (number)
-//   DMs geradas (number)
+//   DMs        (number)     manual
 
 import { Client } from '@notionhq/client';
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 const DB_ID = process.env.NOTION_DB_POSTS;
 
-// utils
 const txt = (rich) => (rich || []).map(r => r.plain_text).join('').trim();
 const propText = (page, name) => txt(page.properties?.[name]?.rich_text);
 const propTitle = (page, name) => txt(page.properties?.[name]?.title);
 const propSelect = (page, name) => page.properties?.[name]?.select?.name || null;
-const propStatus = (page, name) => page.properties?.[name]?.status?.name || null;
 const propMulti = (page, name) => (page.properties?.[name]?.multi_select || []).map(s => s.name);
 const propDate = (page, name) => page.properties?.[name]?.date?.start || null;
 const propUrl = (page, name) => page.properties?.[name]?.url || null;
@@ -42,22 +40,22 @@ export function rowToPost(page) {
     dataPrevista: propDate(page, 'Data prevista'),
     template: propSelect(page, 'Template'),
     pilar: propSelect(page, 'Pilar'),
-    status: propStatus(page, 'Status'),
-    responsavel: propSelect(page, 'Responsavel') || propSelect(page, 'Responsável'),
+    status: propSelect(page, 'Status'),
+    responsavel: propSelect(page, 'Responsavel'),
     hook: propText(page, 'Hook'),
     body: propText(page, 'Body'),
     hashtags: propMulti(page, 'Hashtags'),
-    dadoFonte: propText(page, 'Dado/fonte'),
-    assetUrl: propUrl(page, 'Asset URL'),
-    scheduledAt: propDate(page, 'Scheduled at'),
-    publishedAt: propDate(page, 'Published at'),
-    igPostId: propText(page, 'IG post ID'),
+    dado: propSelect(page, 'Dado'),
+    assetUrl: propUrl(page, 'Asset'),
+    scheduledAt: propDate(page, 'Scheduled'),
+    publishedAt: propDate(page, 'Published'),
+    igPostId: propText(page, 'IG Post'),
     metrics: {
       reach: propNum(page, 'Reach'),
       likes: propNum(page, 'Likes'),
       saves: propNum(page, 'Saves'),
       comments: propNum(page, 'Comments'),
-      dms: propNum(page, 'DMs geradas'),
+      dms: propNum(page, 'DMs'),
     },
   };
 }
@@ -65,12 +63,8 @@ export function rowToPost(page) {
 export async function listApprovedPosts() {
   const res = await notion.databases.query({
     database_id: DB_ID,
-    filter: {
-      and: [
-        { property: 'Status', status: { equals: 'Aprovado' } },
-      ],
-    },
-    sorts: [{ property: 'Scheduled at', direction: 'ascending' }],
+    filter: { property: 'Status', select: { equals: 'Aprovado' } },
+    sorts: [{ property: 'Scheduled', direction: 'ascending' }],
   });
   return res.results.map(rowToPost);
 }
@@ -81,8 +75,8 @@ export async function listPublishedActive(daysBack = 14) {
     database_id: DB_ID,
     filter: {
       and: [
-        { property: 'Status', status: { does_not_equal: 'Backlog' } },
-        { property: 'Published at', date: { on_or_after: since } },
+        { property: 'Status', select: { does_not_equal: 'Backlog' } },
+        { property: 'Published', date: { on_or_after: since } },
       ],
     },
   });
@@ -100,10 +94,10 @@ export async function getPostByCode(code) {
 
 export async function updatePostFields(pageId, fields) {
   const properties = {};
-  if (fields.status) properties['Status'] = { status: { name: fields.status } };
-  if (fields.assetUrl) properties['Asset URL'] = { url: fields.assetUrl };
-  if (fields.publishedAt) properties['Published at'] = { date: { start: fields.publishedAt } };
-  if (fields.igPostId) properties['IG post ID'] = { rich_text: [{ text: { content: fields.igPostId } }] };
+  if (fields.status) properties['Status'] = { select: { name: fields.status } };
+  if (fields.assetUrl) properties['Asset'] = { url: fields.assetUrl };
+  if (fields.publishedAt) properties['Published'] = { date: { start: fields.publishedAt } };
+  if (fields.igPostId) properties['IG Post'] = { rich_text: [{ text: { content: fields.igPostId } }] };
   if (fields.body !== undefined) properties['Body'] = { rich_text: [{ text: { content: fields.body } }] };
   if (fields.metrics) {
     if (fields.metrics.reach != null) properties['Reach'] = { number: fields.metrics.reach };
