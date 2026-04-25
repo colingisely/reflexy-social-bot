@@ -37,14 +37,20 @@ Template visual: ${template} (${pilar})
 
 Gere a caption final pronta para postar no Instagram. Sem hashtags (vou adicionar separado). Sem dizer "Caption:" — so o texto.`;
 
-  const resp = await client.messages.create({
-    model: 'claude-sonnet-4-5',
-    max_tokens: 1024,
-    system: [{ type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } }],
-    messages: [{ role: 'user', content: userPrompt }],
-  });
-
-  return resp.content[0].text.trim();
+  try {
+    const resp = await client.messages.create({
+      model: 'claude-sonnet-4-5',
+      max_tokens: 1024,
+      system: [{ type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } }],
+      messages: [{ role: 'user', content: userPrompt }],
+    });
+    return resp.content[0].text.trim();
+  } catch (e) {
+    // Fallback graceful: usa o body direto do Notion como caption.
+    // Acontece quando: Anthropic API sem credito, key invalida, rate limit, etc.
+    console.warn(`[claude] Claude API falhou (${e.status || 'unknown'}: ${e.message?.slice(0, 80)}). Usando body do Notion como fallback.`);
+    return body?.trim() || hook;
+  }
 }
 
 export function buildFullCaption(refinedBody, hashtags = []) {
