@@ -2,7 +2,7 @@ name: refresh-token-monthly
 
 on:
   schedule:
-    - cron: "0 3 1 * *"   # dia 1 do mes, 00h horario BR
+    - cron: "0 3 1 * *"   # dia 1 do mes, 00h horario BR (UTC-3)
   workflow_dispatch: {}
 
 jobs:
@@ -19,6 +19,18 @@ jobs:
         with:
           node-version: "20"
 
+      # Falha cedo com mensagem clara se o PAT nao estiver configurado.
+      # gh CLI sem GH_TOKEN da erro criptico ("set the GH_TOKEN env variable")
+      # que so e visivel quando ja e tarde demais. Aqui sai com instrucao.
+      - name: Verify PAT configured
+        env:
+          GH_TOKEN: ${{ secrets.PAT_FOR_SECRETS }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error title=PAT_FOR_SECRETS missing::Configure um Fine-grained PAT com permissao Secrets:read+write no repo. Ver Notion T26.4."
+            exit 1
+          fi
+
       - name: Refresh long-lived token
         id: refresh
         env:
@@ -27,9 +39,19 @@ jobs:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
         run: node scripts/refresh-token.js
 
+      # Atualizacao do secret SEM expor token em arg de comando.
+      # Mudancas vs versao anterior:
+      #   1. Token vai pra env var NEW_TOKEN (nao interpolado direto na shell)
+      #   2. ::add-mask:: registrado ANTES do uso (ja registrado pelo refresh
+      #      step tambem, redundancia proposital)
+      #   3. Valor passado pra `gh secret set` via stdin, nao via -b "..."
+      #      (que sempre acaba no log expandido)
       - name: Update IG_ACCESS_TOKEN secret
         env:
-          GH_TOKEN: ${{ secrets.PAT_FOR_SECRETS }}  # PAT com permissao de escrever Secrets
+          GH_TOKEN: ${{ secrets.PAT_FOR_SECRETS }}
+          NEW_TOKEN: ${{ steps.refresh.outputs.token }}
+          EXPIRES_AT: ${{ steps.refresh.outputs.expires_at }}
         run: |
-          gh secret set IG_ACCESS_TOKEN -b "${{ steps.refresh.outputs.token }}" -R ${{ github.repository }}
-          echo "Token renovado, expira em ${{ steps.refresh.outputs.expires_at }}"
+          echo "::add-mask::$NEW_TOKEN"
+          printf '%s' "$NEW_TOKEN" | gh secret set IG_ACCESS_TOKEN -R "$GITHUB_REPOSITORY"
+          echo "✓ Token renovado, expira em $EXPIRES_AT"
